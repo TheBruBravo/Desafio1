@@ -1,13 +1,3 @@
-networks:
-  shared-net:
-    external: true
-
-volumes:
-  prometheus_data:
-    driver: local
-  grafana_data:
-    driver: local
-
 services:
   prometheus:
     build:
@@ -69,3 +59,13 @@ services:
       - "9100:9100"
     networks:
     - shared-net
+
+networks:
+  shared-net:
+    external: true
+
+volumes:
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
