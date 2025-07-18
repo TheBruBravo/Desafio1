@@ -61,8 +61,8 @@ services:
     - shared-net
 
 networks:
-  shared-net:
-    external: true
+    shared-net:
+      external: true
 
 volumes:
   prometheus_data:
