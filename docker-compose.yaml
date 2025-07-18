@@ -1,6 +1,6 @@
 networks:
-  monitoring:
-    driver: bridge
+  shared-net:
+    external: true
 
 volumes:
   prometheus_data:
@@ -26,7 +26,7 @@ services:
     - '--storage.tsdb.retention.time=30d'
     - '--web.enable-lifecycle'
     networks:
-    - monitoring
+    - shared-net
 
   grafana:
     build:
@@ -45,21 +45,21 @@ services:
     ports:
     - '3000:3000'
     networks:
-    - monitoring
+    - shared-net
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     restart: always
     ports:
-      - "8080:8080"
+      - "8081:8080"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
     networks:
-      - monitoring
+    - shared-net
 
   node_exporter:
     image: prom/node-exporter:latest
@@ -68,4 +68,4 @@ services:
     ports:
       - "9100:9100"
     networks:
-      - monitoring
+    - shared-net
